@@ -1,4 +1,4 @@
-Here’s a well-structured **README.md** for your public repository that explains various methods for passing secrets securely in a Python app using Docker and GitHub Actions.  
+
 
 ---
 
@@ -186,4 +186,3 @@ This project is open-source and available under the **MIT License**.
 
 ---
 
-Let me know if you need any modifications! 🚀
