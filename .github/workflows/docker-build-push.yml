@@ -25,6 +25,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./Dockerfile
+          file: ./python_app/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/my-flask-app:latest
