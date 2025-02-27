@@ -1,0 +1,6 @@
+flask
+boto3
+hvac
+kubernetes
+python-dotenv
+gunicorn
