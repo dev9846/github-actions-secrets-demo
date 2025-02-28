@@ -43,5 +43,5 @@ jobs:
       - name: Update Kubernetes Deployment
         run: |
           export KUBECONFIG=$HOME/.kube/config
-          kubectl set image deployment/secret-app secret-app=dev9846/my-flask-app:${{ env.IMAGE_TAG }}
+          kubectl set image deployment/secret-app secret-app=dev9846/my-flask-app:latest
           kubectl rollout status deployment/secret-app

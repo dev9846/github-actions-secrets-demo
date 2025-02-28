@@ -30,4 +30,4 @@ jobs:
           context: ./python_app  # Set the correct context
           file: ./python_app/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/my-flask-app:${{ env.IMAGE_TAG }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/my-flask-app:latest
