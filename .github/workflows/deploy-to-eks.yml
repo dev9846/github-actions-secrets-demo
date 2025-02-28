@@ -13,6 +13,19 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Install AWS CLI
+        run: |
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: ap-south-1
+
       - name: Configure Kubeconfig
         run: |
             mkdir -p $HOME/.kube  # Ensure the .kube directory exists
