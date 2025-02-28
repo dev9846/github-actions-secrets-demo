@@ -21,7 +21,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             echo "Pulling latest image..."
-            docker pull ${{ secrets.DOCKER_USERNAME }}/my-flask-app:latest
+            docker pull ${{ secrets.DOCKER_USERNAME }}/my-flask-app:${{ env.IMAGE_TAG }}
             
             echo "Stopping and removing old container..."
             docker stop myapp || true
@@ -33,6 +33,6 @@ jobs:
               -e DB_PASSWORD="${{ secrets.DB_PASSWORD }}" \
               --name myapp \
               --restart unless-stopped \
-              ${{ secrets.DOCKER_USERNAME }}/my-flask-app:latest
+              ${{ secrets.DOCKER_USERNAME }}/my-flask-app:${{ env.IMAGE_TAG }}
             
             echo "Deployment successful!"

@@ -69,7 +69,7 @@ def health():
 
 @app.route("/test-secret")
 def test_secret():
-    return jsonify({"message": f"DB Password is {masked_password}"}), 200
+    return jsonify({"message": f"DB Password is {masked_password}, This APP is not running on ec2-docker and eks cluster"}), 200
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080)
