@@ -15,9 +15,11 @@ jobs:
 
       - name: Configure Kubeconfig
         run: |
+            mkdir -p $HOME/.kube  # Ensure the .kube directory exists
             echo "${{ secrets.KUBECONFIG }}" | base64 -d > $HOME/.kube/config
             chmod 600 $HOME/.kube/config
-            export KUBECONFIG=$HOME/.kube/config
+        env:
+            KUBECONFIG: $HOME/.kube/config
         
       
 
@@ -28,8 +30,7 @@ jobs:
         run: kubectl config view
 
       - name: Check Network Access
-        run: |
-            curl -v $(aws eks describe-cluster --name ${{ secrets.EKS_CLUSTER_NAME }} --query cluster.endpoint --output text)
+        run: kubectl get svc
       
 
       - name: Update Kubernetes Deployment
