@@ -15,11 +15,25 @@ jobs:
 
       - name: Configure Kubeconfig
         run: |
-            echo "${{ secrets.KUBECONFIG }}" | base64 -d > kubeconfig
-            chmod 600 kubeconfig
-            export KUBECONFIG=$(pwd)/kubeconfig
+            echo "${{ secrets.KUBECONFIG }}" | base64 -d > $HOME/.kube/config
+            chmod 600 $HOME/.kube/config
+            export KUBECONFIG=$HOME/.kube/config
+        
+      
+
+      - name: Check Kubernetes Cluster Info
+        run: kubectl cluster-info
+
+      - name: Debug Kubernetes Context
+        run: kubectl config view
+
+      - name: Check Network Access
+        run: |
+            curl -v $(aws eks describe-cluster --name ${{ secrets.EKS_CLUSTER_NAME }} --query cluster.endpoint --output text)
+      
 
       - name: Update Kubernetes Deployment
         run: |
+          export KUBECONFIG=$HOME/.kube/config
           kubectl set image deployment/secret-app secret-app=dev9846/my-flask-app:${{ env.IMAGE_TAG }}
           kubectl rollout status deployment/secret-app
