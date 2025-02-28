@@ -1,0 +1,25 @@
+name: Deploy to EKS
+
+on:
+  workflow_run:
+    workflows: ["Build and Push Docker Image"]
+    types:
+      - completed  # Triggers only after the previous workflow completes
+
+jobs:
+  deploy-to-eks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Configure Kubeconfig
+        run: |
+            echo "${{ secrets.KUBECONFIG }}" | base64 -d > kubeconfig
+            chmod 600 kubeconfig
+            export KUBECONFIG=$(pwd)/kubeconfig
+
+      - name: Update Kubernetes Deployment
+        run: |
+          kubectl set image deployment/secret-app secret-app=dev9846/my-flask-app:${{ env.IMAGE_TAG }}
+          kubectl rollout status deployment/secret-app
